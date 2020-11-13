@@ -1,0 +1,2 @@
+{:deps {cider/orchard {:mvn/version "0.6.1"}}
+ :paths ["src"]}
