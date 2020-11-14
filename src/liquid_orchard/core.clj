@@ -14,7 +14,13 @@
     (let [namesp (clojure-mode/get-namespace buf)
           v (re-find #"\w.*\w" (-> buf buffer/left buffer/word))
           info (meta (ometa/resolve-var (symbol namesp) (symbol v)))
-          p (when (and info (not= (info :file) "NO_SOURCE_FILE")) (.getPath (ons/canonical-source (info :ns))))]
+          p (when
+              (and
+                info
+                (not= (info :file) "NO_SOURCE_FILE")
+                (not (re-find #"\.jar!" (.getPath (ons/canonical-source (info :ns))))))
+              (.getPath (ons/canonical-source (info :ns))))]
+      (editor/message info)
       (when p
         (editor/open-file p)
         (editor/apply-to-buffer #(-> %
