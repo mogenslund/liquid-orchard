@@ -12,7 +12,7 @@
   [buf]
   (try
     (let [namesp (clojure-mode/get-namespace buf)
-          v (re-find #"\w.*\w" (-> buf buffer/left buffer/word))
+          v (re-find #"\w.*\w\??!?" (-> buf buffer/left buffer/word))
           info (meta (ometa/resolve-var (symbol namesp) (symbol v)))
           p (when
               (and
